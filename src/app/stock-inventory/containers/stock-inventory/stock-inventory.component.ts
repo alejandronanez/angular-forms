@@ -7,10 +7,12 @@ import { FormGroup, FormControl, FormArray} from "@angular/forms";
   template: `
         <div class="stock-inventory">
             <form [formGroup]="form" (ngSubmit)="onSubmit()">
-                <div formGroupName="store">
-                    <input type="text" placeholder="Branch ID" formControlName="branch">
-                    <input type="text" placeholder="Manager code" formControlName="code">
-                </div>
+
+                <stock-branch [parent]="form"></stock-branch>
+                <stock-products [parent]="form"></stock-products>
+                <stock-selector [parent]="form"></stock-selector>
+
+                
                 <div class="stock-inventory__buttons">
                     <button
                         type="submit"
@@ -29,7 +31,13 @@ export class StockInventoryComponent {
     store: new FormGroup({
       branch: new FormControl("abc"),
       code: new FormControl("123")
-    })
+    }),
+    selector: new FormGroup({
+        product_id: new FormControl(''),
+        quantity: new FormControl(10)
+    }),
+    stock: new FormArray([])
+
   })
 
   onSubmit() {
